@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var path = require('path');
 
 
 // GET route for reading data
 router.get('/', function (req, res, next) {
-  return res.sendFile(path.join(__dirname + '/loginpage/index.html'));
+  return res.sendFile(path.join(__dirname + '/skifree/index.html'));
 });
 
 
@@ -68,13 +69,13 @@ router.get('/profile', function (req, res, next) {
           err.status = 400;
           return next(err);
         } else {
-          return res.send('<h1>Welcome to the secret lair</h1>' + user.username + '<br><a type="button" href="/logout">Logout</a>')
+          return res.send('<h1>Welcome to the secret lair</h1>' + user.username + '<br><a type="button" href="/logout">Logout</a>'+'<br><a type="button" href="/game">PLAY</a>');
         }
       }
     });
 });
 
-// GET for logout logout
+// GET for logout
 router.get('/logout', function (req, res, next) {
   if (req.session) {
     // delete session object
@@ -85,6 +86,12 @@ router.get('/logout', function (req, res, next) {
         return res.redirect('/');
       }
     });
+  }
+});
+// GET for game
+router.get('/game', function (req, res, next) {
+  if (req.session) {
+  res.sendfile(path.join(__dirname, '../skifree/index.html'));
   }
 });
 
