@@ -29,7 +29,27 @@ router.post('/login', function (req, res, next) {
 
 });
 
+router.post('/register', function (req, res, next) { 
+  if (req.body.username &&
+    req.body.password) {
 
+    var userData = {
+      username: req.body.username,
+      password: req.body.password,
+      passwordConf: req.body.password,
+    }
+     User.create(userData, function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        req.session.userId = user._id;
+        return res.send(true);
+      }
+    });
+  }
+});
+
+/* old method for creating users and logging in
 //POST route for updating data
 router.post('/', function (req, res, next) {
   // confirm that user typed same password twice
@@ -75,7 +95,7 @@ router.post('/', function (req, res, next) {
     err.status = 400;
     return next(err);
   }
-});
+});*/
 
 // GET route after registering
 router.get('/profile', function (req, res, next) {

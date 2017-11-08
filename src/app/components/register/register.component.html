@@ -5,11 +5,12 @@
 
       <form class="form-register">
         <h2 class="form-register-heading">Register</h2>
-        <input type="text" id="inputUser" class="form-control" placeholder="Username" required autofocus>
+        <input #username type="text" id="inputUser" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input #password type="password" id="inputPassword" class="form-control" placeholder="Password" required>
 	<input type="password" id="confinputPassword" class="form-control" placeholder="Confirm Password" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+         <button (click)="onClickMe(username.value,password.value)">Click me!</button>
       </form>
 
     </div> <!-- /container -->
