@@ -1,4 +1,5 @@
 var express = require('express');
+var cors = require('cors')
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -6,7 +7,7 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
 var mongodbUri = 'mongodb://admin:admin@ds113445.mlab.com:13445/wadproj';
-
+app.use(cors());
 //connect to MongoDB
 mongoose.connect(mongodbUri, {
   useMongoClient: true,

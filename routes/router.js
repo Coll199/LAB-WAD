@@ -10,6 +10,26 @@ router.get('/', function (req, res, next) {
 });
 
 
+router.post('/login', function (req, res, next) {
+  console.log(req.body);
+  if (req.body.username && req.body.password) {
+    User.authenticate(req.body.username, req.body.password, function (error, user) {
+      if (error || !user) {
+        var err = new Error('Wrong username or password.');
+        err.status = 401;
+        return next(err);
+      } else {
+        req.session.userId = user._id;
+        return res.send(true);
+      }
+    });
+  } else {
+      res.sendStatus(400);
+  }
+
+});
+
+
 //POST route for updating data
 router.post('/', function (req, res, next) {
   // confirm that user typed same password twice
@@ -55,7 +75,7 @@ router.post('/', function (req, res, next) {
     err.status = 400;
     return next(err);
   }
-})
+});
 
 // GET route after registering
 router.get('/profile', function (req, res, next) {
