@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
+var jwt = require('jsonwebtoken');
 var User = require('../models/user');
 var path = require('path');
 
@@ -10,124 +12,62 @@ router.get('/', function (req, res, next) {
 });
 
 
-router.post('/login', function (req, res, next) {
-  console.log(req.body);
-  if (req.body.username && req.body.password) {
-    User.authenticate(req.body.username, req.body.password, function (error, user) {
-      if (error || !user) {
-        var err = new Error('Wrong username or password.');
-        err.status = 401;
-        return next(err);
-      } else {
-        req.session.userId = user._id;
-        return res.send(true);
-      }
-    });
-  } else {
-      res.sendStatus(400);
-  }
+// Register
+router.post('/register', (req, res, next) => {
+  let newUser = new User({
+    email: req.body.email,
+    username: req.body.username,
+    password: req.body.password
+  });
 
-});
-
-router.post('/register', function (req, res, next) { 
-  if (req.body.username &&
-    req.body.password) {
-
-    var userData = {
-      username: req.body.username,
-      password: req.body.password,
-      passwordConf: req.body.password,
+  User.addUser(newUser, (err, user) => {
+    if(err){
+      res.json({success: false, msg:'Failed to register user'});
+    } else {
+      res.json({success: true, msg:'User registered'});
     }
-     User.create(userData, function (error, user) {
-      if (error) {
-        return next(error);
-      } else {
-        req.session.userId = user._id;
-        return res.send(true);
-      }
-    });
-  }
+  });
 });
 
-/* old method for creating users and logging in
-//POST route for updating data
-router.post('/', function (req, res, next) {
-  // confirm that user typed same password twice
-  if (req.body.password !== req.body.passwordConf) {
-    var err = new Error('Passwords do not match.');
-    err.status = 400;
-    res.send("Passwords do not match.");
-    return next(err);
-  }
+// Authenticate
+router.post('/authenticate', (req, res, next) => {
+  const username = req.body.username;
+  const password = req.body.password;
 
-  if (req.body.username &&
-    req.body.password &&
-    req.body.passwordConf) {
-
-    var userData = {
-      username: req.body.username,
-      password: req.body.password,
-      passwordConf: req.body.passwordConf,
+  User.getUserByUsername(username, (err, user) => {
+    if(err) throw err;
+    if(!user){
+      return res.json({success: false, msg: 'User not found'});
     }
 
-    User.create(userData, function (error, user) {
-      if (error) {
-        return next(error);
-      } else {
-        req.session.userId = user._id;
-        return res.redirect('/profile');
-      }
-    });
+    User.comparePassword(password, user.password, (err, isMatch) => {
+      if(err) throw err;
+      if(isMatch){
+        const token = jwt.sign(user, 'work hard', {
+          expiresIn: 604800 // 1 week
+        });
 
-  } else if (req.body.logusername && req.body.logpassword) {
-    User.authenticate(req.body.logusername, req.body.logpassword, function (error, user) {
-      if (error || !user) {
-        var err = new Error('Wrong username or password.');
-        err.status = 401;
-        return next(err);
+        res.json({
+          success: true,
+          token: 'JWT '+token,
+          user: {
+            id: user._id,
+            username: user.username,
+            email: user.email
+          }
+        });
       } else {
-        req.session.userId = user._id;
-        return res.redirect('/profile');
+        return res.json({success: false, msg: 'Wrong password'});
       }
     });
-  } else {
-    var err = new Error('All fields required.');
-    err.status = 400;
-    return next(err);
-  }
-});*/
-
-// GET route after registering
-router.get('/profile', function (req, res, next) {
-  User.findById(req.session.userId)
-    .exec(function (error, user) {
-      if (error) {
-        return next(error);
-      } else {
-        if (user === null) {
-          var err = new Error('Not authorized! Go back!');
-          err.status = 400;
-          return next(err);
-        } else {
-          return res.send('<h1>Welcome to the secret lair</h1>' + user.username + '<br><a type="button" href="/logout">Logout</a>'+'<br><a type="button" href="/game">PLAY</a>');
-        }
-      }
-    });
+  });
 });
 
-// GET for logout
-router.get('/logout', function (req, res, next) {
-  if (req.session) {
-    // delete session object
-    req.session.destroy(function (err) {
-      if (err) {
-        return next(err);
-      } else {
-        return res.redirect('/');
-      }
-    });
-  }
+// Profile
+router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+  res.json({user: req.user});
 });
+
 // GET for game
 router.get('/game', function (req, res, next) {
   if (req.session) {

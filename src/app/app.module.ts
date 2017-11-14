@@ -10,8 +10,10 @@ import {HttpClientModule} from '@angular/common/http';
 
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
+import { ValidateService } from './services/validate.service';
 import { CanActivateRouteGuard } from './guards/can-activate-route.guard';
 import { ProfileComponent } from './components/profile/profile.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     LoginComponent,
     NavbarComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +32,7 @@ import { ProfileComponent } from './components/profile/profile.component';
   providers: [
     UserService,
     AuthService,
+    ValidateService,
     CanActivateRouteGuard
   ],
   bootstrap: [AppComponent]
