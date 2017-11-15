@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { User } from '../../models/user.model';
-import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -19,7 +18,7 @@ export class LoginComponent implements OnInit {
   //placeholder will be implemented into an auth service
   private auth: boolean = false;
 
-  constructor(private userService: UserService,private authService: AuthService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -29,10 +28,10 @@ export class LoginComponent implements OnInit {
     this.user.password = password;
     console.log(this.user);
     if(this.user.username && this.user.password){
-      this.userService.check(this.user).subscribe(res => this.auth = res as boolean);
+      //this.userService.check(this.user).subscribe(res => this.auth = res as boolean);
     }
     console.log(this.auth);
-    this.authService.setAuth(this.auth);   
+    //this.authService.setAuth(this.auth);   
   }
 
   getauth() : boolean{

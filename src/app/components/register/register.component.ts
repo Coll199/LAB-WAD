@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { User } from '../../models/user.model';
-import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +15,7 @@ export class RegisterComponent implements OnInit {
   };
 
 
-  constructor(private userService: UserService) { }
+  constructor() { }
 
   ngOnInit() {
   }
@@ -26,7 +25,7 @@ export class RegisterComponent implements OnInit {
     this.user.password = password;
     console.log(this.user);
     if(this.user.username && this.user.password){
-      this.userService.create(this.user).subscribe(res => console.log(res));
+      //this.userService.create(this.user).subscribe(res => console.log(res));
     }
   }
 }
