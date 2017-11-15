@@ -8,10 +8,9 @@ import { RegisterComponent } from './components/register/register.component';
 import { AppRoutingModule } from './/app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
 
-import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { ValidateService } from './services/validate.service';
-import { CanActivateRouteGuard } from './guards/can-activate-route.guard';
+import { AuthGuard } from './guards/auth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
 
@@ -30,10 +29,9 @@ import { HomeComponent } from './components/home/home.component';
     HttpClientModule
   ],
   providers: [
-    UserService,
     AuthService,
     ValidateService,
-    CanActivateRouteGuard
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
