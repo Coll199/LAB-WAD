@@ -1,5 +1,5 @@
-/* PlayerComponent's private CSS styles */
-.players {
+/* LeaderboardComponent's private CSS styles */
+.leaderboard {
   margin: 0 0 0 0;
   list-style-type: none;
   padding: 0;
@@ -8,7 +8,7 @@
   margin-left:auto;
   margin-top:10em;
 }
-.players li {
+.leaderboard li {
   position: relative;
   cursor: pointer;
   background-color: #EEE;
@@ -18,29 +18,29 @@
   border-radius: 4px;
 }
 
-.players li:hover {
+.leaderboard li:hover {
   color: #607D8B;
   background-color: #DDD;
   left: .1em;
 }
-.players .name {
+.leaderboard .name {
 	display:inline-block;
 	color:black;
 	float:left;
 }
 
-.players .score {
+.leaderboard .score {
 	display:inline-block;
 	color:black;
 	float: right;
 }
-.players p {
+.leaderboard p {
   padding-left: .5em
 
 }
-.players .textname {
+.leaderboard .textname {
   float:left;
 }
-.players .textscore {
+.leaderboard .textscore {
   padding-left:12.5em;
 }

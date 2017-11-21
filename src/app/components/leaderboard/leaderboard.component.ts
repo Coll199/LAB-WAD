@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Player } from '../../models/player.model';
 
 @Component({
-  selector: 'app-player',
-  templateUrl: './player.component.html',
-  styleUrls: ['./player.component.css']
+  selector: 'app-leaderboard',
+  templateUrl: './leaderboard.component.html',
+  styleUrls: ['./leaderboard.component.css']
 })
-export class PlayerComponent implements OnInit {
+export class LeaderboardComponent implements OnInit {
   players: Player[]=[
   {name: 'Mr.Nice', score: 5000},
   {name: 'Rubberman', score: 222},
