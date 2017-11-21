@@ -31,25 +31,27 @@ router.post('/register', (req, res, next) => {
 
 // Authenticate
 router.post('/authenticate', (req, res, next) => {
-  const username = req.body.username;
-  const password = req.body.password;
+  var authUser = {
+    username: req.body.username,
+    password: req.body.password
+  };
 
-  User.getUserByUsername(username, (err, user) => {
+  User.getUserByUsername(authUser.username, (err, user) => {
     if(err) throw err;
     if(!user){
       return res.json({success: false, msg: 'User not found'});
     }
 
-    User.comparePassword(password, user.password, (err, isMatch) => {
+    User.comparePassword(authUser.password, user.password, (err, isMatch) => {
       if(err) throw err;
       if(isMatch){
-        const token = jwt.sign(user, 'work hard', {
+        const token = jwt.sign(authUser, 'work hard', {
           expiresIn: 604800 // 1 week
         });
-
+        
         res.json({
           success: true,
-          token: 'JWT '+token,
+          token: token,
           user: {
             id: user._id,
             username: user.username,
