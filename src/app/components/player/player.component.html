@@ -1,0 +1,10 @@
+<ul class="players">
+  <h2>Leaderboard</h2>
+  <p>
+  	<span class="textname">Name</span>
+  	<span class="textscore">Score</span>
+  </p>
+  <li *ngFor="let player of players">
+    <span class="name">{{player.name}}</span> <span class="score">{{player.score}}</span>
+  </li>
+</ul>
