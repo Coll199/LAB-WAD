@@ -4,7 +4,7 @@
   	<span class="textname">Name</span>
   	<span class="textscore">Score</span>
   </p>
-  <li *ngFor="let player of players">
-    <span class="name">{{player.name}}</span> <span class="score">{{player.score}}</span>
+  <li *ngFor="let score of scores">
+    <span class="name">{{score.username}}</span> <span class="score">{{score.score}}</span>
   </li>
 </ul>

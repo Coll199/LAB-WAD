@@ -9,13 +9,13 @@ import { LeaderboardService } from '../../services/leaderboard.service'
 })
 export class LeaderboardComponent implements OnInit {
   players: Score[]=[
-  {name: 'Mr.Nice', score: 5000},
-  {name: 'Rubberman', score: 222},
-  {name: 'Bombasto', score: 411},
-  {name: 'Dr.Strange', score: 603},
-  {name: 'Dyama', score: 15},
-  {name: 'Magma', score: 50},
-  {name: 'Tornado', score: 1200},
+  {username: 'Mr.Nice', score: 5000},
+  {username: 'Rubberman', score: 222},
+  {username: 'Bombasto', score: 411},
+  {username: 'Dr.Strange', score: 603},
+  {username: 'Dyama', score: 15},
+  {username: 'Magma', score: 50},
+  {username: 'Tornado', score: 1200},
   ];
   scores: Score[];
   constructor(private leaderboardService: LeaderboardService) { }
@@ -27,7 +27,7 @@ export class LeaderboardComponent implements OnInit {
         this.scores = scores;
         console.log('this.scores=' + this.scores);
         console.log('this.scores.length=' + this.scores.length);
-        console.log('this.scores[0]=' + this.scores[0]);
+        console.log('this.scores[0].username=' + this.scores[0].username);
       }, //Bind to view
       err => {
         // Log errors if any
