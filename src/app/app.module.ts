@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AuthService } from './services/auth.service';
 import { ValidateService } from './services/validate.service';
+import { LeaderboardService } from './services/leaderboard.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
@@ -33,6 +34,7 @@ import { LeaderboardComponent } from './components/leaderboard/leaderboard.compo
   providers: [
     AuthService,
     ValidateService,
+    LeaderboardService,
     AuthGuard
   ],
   bootstrap: [AppComponent]

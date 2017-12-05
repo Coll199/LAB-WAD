@@ -19,11 +19,11 @@ module.exports.addScore = function(newScore, callback){
 }
 
 module.exports.getScores = function(callback){
-	Score.find({}, 'username score',function(err, scores) {
+	Score.find({}, '-_id username score',function(err, scores) {
 		if(err){
-			callback(err);
+			callback(err,null);
 		}else{
-			callback(scores);
+			callback(null,scores);
 		}
 	})
 }
