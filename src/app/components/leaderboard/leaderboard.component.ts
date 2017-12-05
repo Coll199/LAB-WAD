@@ -8,15 +8,6 @@ import { LeaderboardService } from '../../services/leaderboard.service'
   styleUrls: ['./leaderboard.component.css']
 })
 export class LeaderboardComponent implements OnInit {
-  players: Score[]=[
-  {username: 'Mr.Nice', score: 5000},
-  {username: 'Rubberman', score: 222},
-  {username: 'Bombasto', score: 411},
-  {username: 'Dr.Strange', score: 603},
-  {username: 'Dyama', score: 15},
-  {username: 'Magma', score: 50},
-  {username: 'Tornado', score: 1200},
-  ];
   scores: Score[];
   constructor(private leaderboardService: LeaderboardService) { }
 
