@@ -3,6 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var jwt = require('jsonwebtoken');
 var User = require('../models/user');
+var Score = require('../models/leaderboard');
 var path = require('path');
 
 
@@ -25,6 +26,22 @@ router.post('/register', (req, res, next) => {
       res.json({success: false, msg:'Failed to register user'});
     } else {
       res.json({success: true, msg:'User registered'});
+    }
+  });
+});
+
+// Add Score to DB
+router.post('/score', (req, res, next) => {
+  let newScore = new Score({
+    username: req.body.username,
+    score: req.body.score
+  });
+
+  Score.addScore(newScore, (err, score) => {
+    if(err){
+      res.json({msg:'Failed to save score'});
+    }else {
+      res.json({msg:'Score saved'});
     }
   });
 });
@@ -68,6 +85,17 @@ router.post('/authenticate', (req, res, next) => {
 // Profile
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   res.json({user: req.user});
+});
+
+// GET List of Scores
+router.get('/scoreList', function (req, res, next) {
+  Score.getScores((err,scores)=>{
+    if(err){
+      res.send(err);
+    }else{
+      res.json(scores);
+    }
+  });
 });
 
 // GET for game
