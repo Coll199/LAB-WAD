@@ -39,10 +39,6 @@ app.use(passport.session());
 
 require('./config/passport')(passport);
 
-// serve static files from template
-app.use(express.static(__dirname + '/loginpage'));
-app.use(express.static(__dirname + '/skifree'));
-
 // include routes
 var routes = require('./routes/router');
 app.use('/', routes);

@@ -6,13 +6,6 @@ var User = require('../models/user');
 var Score = require('../models/leaderboard');
 var path = require('path');
 
-
-// GET route for reading data
-router.get('/', function (req, res, next) {
-  return res.sendFile(path.join(__dirname + '/skifree/index.html'));
-});
-
-
 // Register
 router.post('/register', (req, res, next) => {
   let newUser = new User({
@@ -96,13 +89,6 @@ router.get('/scoreList', function (req, res, next) {
       res.json(scores);
     }
   });
-});
-
-// GET for game
-router.get('/game', function (req, res, next) {
-  if (req.session) {
-  res.sendfile(path.join(__dirname, '../skifree/index.html'));
-  }
 });
 
 module.exports = router;

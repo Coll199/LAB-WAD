@@ -11,10 +11,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { ValidateService } from './services/validate.service';
 import { LeaderboardService } from './services/leaderboard.service';
+import { BestScoreManager } from './services/snake.storage.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
 import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
+import { SnakeComponent } from './components/snake/snake.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { LeaderboardComponent } from './components/leaderboard/leaderboard.compo
     ProfileComponent,
     HomeComponent,
     LeaderboardComponent,
+    SnakeComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +38,7 @@ import { LeaderboardComponent } from './components/leaderboard/leaderboard.compo
     AuthService,
     ValidateService,
     LeaderboardService,
+    BestScoreManager,
     AuthGuard
   ],
   bootstrap: [AppComponent]
