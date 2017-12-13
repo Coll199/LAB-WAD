@@ -3,7 +3,6 @@ var mongoose = require('mongoose')
 var LeaderboardSchema = new mongoose.Schema({
 	username:{
 		type:String,
-		unique: true,
 		required: true
 	},
 	score:{
