@@ -1,23 +1,14 @@
 <html lang="en">
   <body>
-
     <div class="container">
-
-      <form class="form-signin">
+      <div class="form-signin">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputUser" class="sr-only">Username</label>
         <input #username type="text" id="inputUser" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input #password type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        <button (click)="onClickMe(username.value,password.value)" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
-      <button (click)="onClickMe(username.value,password.value)">Click me!</button>
-
+        <button (click)="onClickMe(username.value,password.value)" class="btn btn-lg btn-primary btn-block">Sign in</button>
+      </div>
     </div> <!-- /container -->
   </body>
 </html>
