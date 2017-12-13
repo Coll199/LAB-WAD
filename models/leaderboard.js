@@ -19,7 +19,7 @@ module.exports.addScore = function(newScore, callback){
 }
 
 module.exports.getScores = function(callback){
-	Score.find({}, '-_id username score',function(err, scores) {
+	Score.find({}, '-_id username score').sort({score: 'desc'}).exec(function(err, scores){
 		if(err){
 			callback(err,null);
 		}else{
