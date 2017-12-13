@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'leaderboard', component: LeaderboardComponent},
-  { path: 'game', component: SnakeComponent}
+  { path: 'game', component: SnakeComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
