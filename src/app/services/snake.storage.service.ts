@@ -15,12 +15,13 @@ export class BestScoreManager {
 
   constructor(private http:HttpClient) { }
 
-  public store(score: number) {
+  public store(id: number,score: number) {
     let user = <User>JSON.parse(localStorage.getItem('user'));
     let headers = new HttpHeaders();
     headers.append('Content-Type','application/json');
     localStorage.setItem(this.ngxSnake, JSON.stringify({ 'best_score': score }));
     var scores = {
+      lid:id,
       username:user.username,
       score:score
     }
@@ -40,7 +41,7 @@ export class BestScoreManager {
   public retrieve() {
     let storage = this.parse();
     if (!storage) {
-      this.store(0);
+      this.store(1,0);
       storage = this.parse();
     }
 

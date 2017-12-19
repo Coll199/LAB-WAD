@@ -1,6 +1,10 @@
 var mongoose = require('mongoose')
 
 var LeaderboardSchema = new mongoose.Schema({
+	lid:{
+		type:Number,
+		required: true
+	},
 	username:{
 		type:String,
 		required: true
@@ -19,6 +23,16 @@ module.exports.addScore = function(newScore, callback){
 
 module.exports.getScores = function(callback){
 	Score.find({}, '-_id username score').sort({score: 'desc'}).exec(function(err, scores){
+		if(err){
+			callback(err,null);
+		}else{
+			callback(null,scores);
+		}
+	})
+}
+
+module.exports.getScoresById = function(id,callback){
+	Score.find({lid:id}, '-_id username score').sort({score: 'desc'}).exec(function(err, scores){
 		if(err){
 			callback(err,null);
 		}else{

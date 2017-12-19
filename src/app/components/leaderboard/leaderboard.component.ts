@@ -8,6 +8,7 @@ import { LeaderboardService } from '../../services/leaderboard.service'
   styleUrls: ['./leaderboard.component.css']
 })
 export class LeaderboardComponent implements OnInit {
+  id:number;
   scores: Score[];
   constructor(private leaderboardService: LeaderboardService) { }
 
@@ -16,9 +17,6 @@ export class LeaderboardComponent implements OnInit {
       .subscribe(
       scores => {
         this.scores = scores;
-        console.log('this.scores=' + this.scores);
-        console.log('this.scores.length=' + this.scores.length);
-        console.log('this.scores[0].username=' + this.scores[0].username);
       }, //Bind to view
       err => {
         // Log errors if any
@@ -26,9 +24,20 @@ export class LeaderboardComponent implements OnInit {
       })
     }
 
+  getScoresById(id){
+    this.leaderboardService.getScoresById(id)
+      .subscribe(
+      scores => {
+        this.scores = scores;
+      }, //Bind to view
+      err => {
+        // Log errors if any
+        console.log(err);
+      })
+  }
 
   ngOnInit() {
-    this.getScores();
+    this.getScoresById(this.id);
   }
 
 }

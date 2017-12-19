@@ -12,6 +12,7 @@ import { CONTROLS, COLORS, BOARD_SIZE, GAME_MODES } from './snake.constants';
 })
 
 export class SnakeComponent {
+  id:number;
   private interval: number;
   private tempDirection: number;
   private default_mode = 'classic';
@@ -215,7 +216,7 @@ export class SnakeComponent {
     let me = this;
 
     if (this.score > this.best_score) {
-      this.bestScoreService.store(this.score);
+      this.bestScoreService.store(this.id,this.score);
       this.best_score = this.score;
       this.newBestScore = true;
     }

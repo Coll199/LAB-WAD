@@ -14,4 +14,8 @@ export class LeaderboardService{
 	getScores(): Observable<Score[]> {
 		 return this.http.get<Score[]>('http://localhost:3000/scoreList')
 	}
+
+	getScoresById(id): Observable<Score[]> {
+		 return this.http.get<Score[]>('http://localhost:3000/scoreList/'+id)
+	}
 }

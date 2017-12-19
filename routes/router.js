@@ -4,6 +4,7 @@ var passport = require('passport');
 var jwt = require('jsonwebtoken');
 var User = require('../models/user');
 var Score = require('../models/leaderboard');
+var Game = require('../models/game');
 var path = require('path');
 
 // Register
@@ -23,9 +24,25 @@ router.post('/register', (req, res, next) => {
   });
 });
 
+// Add Game to DB
+router.post('/game', (req, res, next) => {
+  let newGame = new Game({
+    gid: req.body.gid,
+    type: req.body.type
+  });
+  Game.addGame(newGame, (err, score) => {
+    if(err){
+      res.json({msg:'Failed to save game'});
+    }else {
+      res.json({msg:'Game saved'});
+    }
+  });
+});
+
 // Add Score to DB
 router.post('/score', (req, res, next) => {
   let newScore = new Score({
+    lid: req.body.lid,
     username: req.body.username,
     score: req.body.score
   });
@@ -80,9 +97,41 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res,
   res.json({user: req.user});
 });
 
+// GET List of Games
+router.get('/gameList', function (req, res, next) {
+  Game.getGames((err,games)=>{
+    if(err){
+      res.send(err);
+    }else{
+      res.json(games);
+    }
+  });
+});
+
+router.delete('/game/:id', function (req, res, next) {
+  Game.removeGameById(req.params.id, (err,games)=>{
+    if(err){
+      res.send(err);
+    }else{
+      res.json(games);
+    }
+  });
+});
+
+
 // GET List of Scores
 router.get('/scoreList', function (req, res, next) {
   Score.getScores((err,scores)=>{
+    if(err){
+      res.send(err);
+    }else{
+      res.json(scores);
+    }
+  });
+});
+
+router.get('/scoreList/:id', function (req, res, next) {
+  Score.getScoresById(req.params.id, (err,scores)=>{
     if(err){
       res.send(err);
     }else{

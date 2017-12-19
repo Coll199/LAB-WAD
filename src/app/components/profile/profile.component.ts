@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SnakeComponent } from '../snake/snake.component'
 
 @Component({
   selector: 'app-profile',
